@@ -1,5 +1,5 @@
 PORT=/dev/ttyUSB0
-TARGET=Blinky
+TARGET=Button
 MCU=atmega328p
 CFLAGS=-g -Wall -mcall-prologues -mmcu=$(MCU) -Os
 LDFLAGS=-Wl,-gc-sections -Wl,-relax
@@ -18,4 +18,4 @@ clean:
 	$(CC) $(CFLAGS) $(OBJECT_FILES) $(LDFLAGS) -o $@
 
 program: $(TARGET).hex
-	avrdude -p atmega328p -c avrisp -b 19200 -P /dev/ttyUSB0 -U flash:w:$(TARGET).hex
+	avrdude -p atmega328p -c avrisp -b 19200 -P /dev/ttyUSB0 -U $(TARGET).hex
