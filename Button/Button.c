@@ -3,26 +3,31 @@
 #endif
 
 // Pins
-#define BUTTON1 PIND6
-
 
 #include <avr/io.h>
 #include <util/delay.h>
 
 int main(void)
 {
+    //Init
+    DDRD = 1<<DDD4; //Set pin 4 as output
+    PORTD &= ~(1<<PD4); //Set pin 4 low
+    PORTB = 1<<PB0;//Set Pull Up Resistor on pin 6
+
     
-    DDRD = 1<<DDD4;
-    PORTD |= (1<<PD6);//Set Pull Up Resistor
     while(1)
     {
-        if(!PIND6){
+       if(((PINB & (1 << PB0)) == 0) && ((PIND & (1 << PD4)) == 0)){
 
-           PORTD |= (1<<PD4); 
+          PORTD |= (1<<PD4); 
+          _delay_ms(500.0);
         }
-        else
-           PORTD |= ~(1<<PD4); 
 
+        if(((PINB & (1 << PB0)) == 0) && ((PIND & (1 << PD4)) == (1 << PD4))){
+
+         PORTD &= ~(1<<PD4); 
+         _delay_ms(500.0);
+        }
     }
 }
 
